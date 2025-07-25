@@ -1,0 +1,3 @@
+when the car overlap a taxi station appears the client and you need to acept or decleane the race
+add a score / taxi life 
+add baches to decrease the taxi life
