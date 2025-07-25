@@ -58,21 +58,33 @@
         function create() {
             platforms = this.physics.add.staticGroup();
 
-
-            // this.add.image(window.innerWidth / 2, 1225, 'limit_center')
-            platforms.create(50, 250, 'limit');
-            platforms.create(window.innerWidth - 50, 250, 'limit');
-
-            this.spliteWhiteLine = []; // ✅ initialize the array
-
+            // make infinite splite white lines
+            this.spliteWhiteLine = [];
             for (let i = 0; i < 26; i++) {
                 const dash = this.add.rectangle(this.scale.width / 2, i * 80, 10, 40, 0xffffff);
                 this.spliteWhiteLine.push(dash);
             }
 
+            // make infinite splite yellow lines left
+            this.spliteYellowLineLeft = this.physics.add.staticGroup();
+            for (let i = 0; i < 26; i++) {
+                const dash = this.add.rectangle(5, i * 80, 10, 50, 0xffff00);
+
+                this.spliteYellowLineLeft.add(dash, true);
+            }
+
+            // make infinite splite yellow lines right
+            this.spliteYellowLineRight = this.physics.add.staticGroup();
+            for (let i = 0; i < 26; i++) {
+                const dash = this.add.rectangle(window.innerWidth - 5, i * 80, 10, 50, 0xffff00);
+
+                this.spliteYellowLineRight.add(dash, true);
+            }
+
+
             player = this.physics.add.sprite(window.innerWidth / 2, window.innerHeight, 'car');
             player.setCollideWorldBounds(true);
-            player.setScale(4);
+            player.setScale(3.5);
 
 
             this.anims.create({
@@ -96,10 +108,7 @@
             });
             cursors = this.input.keyboard.createCursorKeys();
 
-            this.physics.add.collider(player, platforms);
-
-
-
+            this.physics.add.collider(player, this.spliteWhiteLine);
         }
 
         function update(time, delta) {
@@ -127,6 +136,8 @@
                 player.setVelocityY(-330);
             }
 
+            // make infinite road
+
             const speed = 0.2 * delta; // Adjust for desired speed
 
             this.spliteWhiteLine.forEach(whiteLine => {
@@ -134,6 +145,22 @@
 
                 if (whiteLine.y > this.sys.game.config.height) {
                     whiteLine.y = 0; // Or whiteLine.y -= totalwhiteLineLength for smoother spacing
+                }
+            });
+
+            this.spliteYellowLineLeft.getChildren().forEach(dash => {
+                dash.y += speed;
+
+                if (dash.y > this.sys.game.config.height) {
+                    dash.y = 0; // Reset to top or some other logic
+                }
+            });
+
+            this.spliteYellowLineRight.getChildren().forEach(dash => {
+                dash.y += speed;
+
+                if (dash.y > this.sys.game.config.height) {
+                    dash.y = 0; // Reset to top or some other logic
                 }
             });
 
