@@ -1,0 +1,25 @@
+[
+    {
+        "path": "assets/images/car",
+        "files": [
+            {
+                "type": "image",
+                "key": "car_blue_2",
+                "url": "car_blue_2.png",
+                "frameConfig": {
+                    "frameWidth": 108.285714286,
+                    "frameHeight": 101
+                }
+            },
+             {
+                "type": "image",
+                "key": "car_green",
+                "url": "car_green.png",
+                "frameConfig": {
+                    "frameWidth": 100,
+                    "frameHeight": 100
+                }
+            }
+        ]
+    }
+]
